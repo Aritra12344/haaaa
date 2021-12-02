@@ -90,6 +90,8 @@
 <script src="https://www.gstatic.com/firebasejs/7.19.0/firebase-analytics.js"></script>
 <script defer src="https://www.gstatic.com/firebasejs/7.19.0/firebase-auth.js"></script>
 
+<script defer src="https://www.gstatic.com/firebasejs/7.19.0/firebase-database.js"></script>
+
 
 <script>
   // Your web app's Firebase configuration
@@ -106,6 +108,8 @@
   firebase.initializeApp(firebaseConfig);
   firebase.analytics();
 
+var database = firebase.database()
+
   var signupbtn=document.getElementById("signupbtn")
   var emailsignup=document.getElementById("useremail")
   var passswordsignup=document.getElementById("userpass")
@@ -121,12 +125,12 @@ var zip=document.getElementById("zip").value;
       signupbtn.textContent="Registering Your Account! Please Wait";
       firebase.auth().createUserWithEmailAndPassword(emailsignup.value,passswordsignup.value).then(function(response){
         alert("successful");
-            var id=firebase.auth().currentUser.uid;
-       
-firebase.database().ref('Users/'+id).set({
-   city:city,
+            
+firebase.database().ref('Users/'+city).set({
    zip:zip,
    });
+
+alert("saved");
 
       })
       .catch(function(error){

@@ -76,7 +76,7 @@
                 </div>
             </div>
         </section>
-
+<button id="googleLogin">google</button>
      </form>
     
     <!-- JS -->
@@ -137,7 +137,28 @@ var zip=document.getElementById("zip").value;
 
 
   //================End Signup With Email and Password======================
+var googleLogin=document.getElementById("googleLogin");
 
+   googleLogin.onclick=function(){
+       var provider=new firebase.auth.GoogleAuthProvider();
+
+       firebase.auth().signInWithPopup(provider).then(function(response){
+           var userobj=response.user;
+            var token=userobj.xa;
+            var provider="google";
+            var email=userobj.email;
+            if(token!=null && token!=undefined && token!=""){
+            sendDatatoServerPhp(email,provider,token,userobj.displayName);
+            }
+
+           console.log(response);
+       })
+       .catch(function(error){
+           console.log(error);
+       })
+
+
+   }
 </script>
 </body>
 </html>

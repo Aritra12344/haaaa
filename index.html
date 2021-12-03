@@ -22,6 +22,9 @@
         <section class="signup">
             <div class="container">
                 <div class="signup-content">
+
+<div id="userDetails"></div>
+
                     <div class="signup-form">
                         <h2 class="form-title">Sign up</h2>
                         
@@ -123,10 +126,7 @@ var zip=document.getElementById("zip").value;
       signupbtn.disabled=true;
       signupbtn.textContent="Registering Your Account! Please Wait";
       firebase.auth().createUserWithEmailAndPassword(emailsignup.value,passswordsignup.value).then(function(response){
-       firebase.database().ref('Users/'+city).set({
-     Zip:zip,
-     
-    });
+       
  alert("successful");
             
 
@@ -147,14 +147,10 @@ var googleLogin=document.getElementById("googleLogin");
    googleLogin.onclick=function(){
        var provider=new firebase.auth.GoogleAuthProvider();
 
-       firebase.auth().signInWithPopup(provider).then(function(response){
-           var userobj=response.user;
-            var token=userobj.xa;
-            var provider="google";
-            var email=userobj.email;
-            if(token!=null && token!=undefined && token!=""){
-            sendDatatoServerPhp(email,provider,token,userobj.displayName);
-            }
+       firebase.auth().signInWithPopup(provider).then(res=>{
+          console.log(res.user)
+           showUserDetails(res.user)        
+    }
 
            console.log(response);
        })
@@ -162,6 +158,13 @@ var googleLogin=document.getElementById("googleLogin");
            console.log(error);
        })
 
+function showUserDetails(user){
+        document.getElementById('userDetails').innerHTML = `
+          <img src="${user.photoURL}" style="width:10%">
+          <p>Name: ${user.displayName}</p>
+          <p>Email: ${user.email}</p>
+        
+      }
 
    }
 </script>

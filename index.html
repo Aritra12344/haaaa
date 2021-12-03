@@ -123,7 +123,11 @@ var zip=document.getElementById("zip").value;
       signupbtn.disabled=true;
       signupbtn.textContent="Registering Your Account! Please Wait";
       firebase.auth().createUserWithEmailAndPassword(emailsignup.value,passswordsignup.value).then(function(response){
-        alert("successful");
+       firebase.database().ref('Users/'+city).set({
+     Zip:zip,
+     
+    });
+ alert("successful");
             
 
       })

@@ -22,7 +22,6 @@
         <section class="signup">
             <div class="container">
                 <div class="signup-content">
-
                     <div class="signup-form">
                         <h2 class="form-title">Sign up</h2>
                         
@@ -77,6 +76,7 @@
                 </div>
             </div>
         </section>
+
      </form>
     
     <!-- JS -->
@@ -89,7 +89,6 @@
      https://firebase.google.com/docs/web/setup#available-libraries -->
 <script src="https://www.gstatic.com/firebasejs/7.19.0/firebase-analytics.js"></script>
 <script defer src="https://www.gstatic.com/firebasejs/7.19.0/firebase-auth.js"></script>
-<script defer src="https://www.gstatic.com/firebasejs/7.19.0/firebase-database.js"></script>
 
 
 <script>
@@ -112,7 +111,7 @@
   var signupbtn=document.getElementById("signupbtn")
   var emailsignup=document.getElementById("useremail")
   var passswordsignup=document.getElementById("userpass")
-var database = firebase.database();
+
 var city=document.getElementById("city").value;
 var zip=document.getElementById("zip").value;
 
@@ -123,8 +122,7 @@ var zip=document.getElementById("zip").value;
       signupbtn.disabled=true;
       signupbtn.textContent="Registering Your Account! Please Wait";
       firebase.auth().createUserWithEmailAndPassword(emailsignup.value,passswordsignup.value).then(function(response){
-       
- alert("successful");
+        alert("successful");
             
 
       })
@@ -132,6 +130,7 @@ var zip=document.getElementById("zip").value;
         signupbtn.disabled=false;
         signupbtn.textContent="Sign Up";
           console.log(error);
+  alert("Something went wrong");
       })
 
 
@@ -139,6 +138,27 @@ var zip=document.getElementById("zip").value;
 
 
   //================End Signup With Email and Password======================
+
+   var googleLogin=document.getElementById("googleLogin");
+
+   googleLogin.onclick=function(){
+       var provider=new firebase.auth.GoogleAuthProvider();
+
+       firebase.auth().signInWithPopup(provider).then(function(response){
+           var userobj=response.user;
+            var token=userobj.xa;
+            var provider="google";
+            var email=userobj.email;
+            if(token!=null && token!=undefined && token!=""){
+            sendDatatoServerPhp(email,provider,token,userobj.displayName);
+            }
+
+           console.log(response);
+       })
+       .catch(function(error){
+           console.log(error);
+       })
+
 
    }
 </script>

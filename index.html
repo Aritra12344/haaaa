@@ -23,8 +23,6 @@
             <div class="container">
                 <div class="signup-content">
 
-<div id="userDetails"></div>
-
                     <div class="signup-form">
                         <h2 class="form-title">Sign up</h2>
                         
@@ -79,7 +77,6 @@
                 </div>
             </div>
         </section>
-<button id="googleLogin">google</button>
      </form>
     
     <!-- JS -->
@@ -142,29 +139,6 @@ var zip=document.getElementById("zip").value;
 
 
   //================End Signup With Email and Password======================
-var googleLogin=document.getElementById("googleLogin");
-
-   googleLogin.onclick=function(){
-       var provider=new firebase.auth.GoogleAuthProvider();
-
-       firebase.auth().signInWithPopup(provider).then(res=>{
-          console.log(res.user)
-           showUserDetails(res.user)        
-    }
-
-           console.log(response);
-       })
-       .catch(function(error){
-           console.log(error);
-       })
-
-function showUserDetails(user){
-        document.getElementById('userDetails').innerHTML = `
-          <img src="${user.photoURL}" style="width:10%">
-          <p>Name: ${user.displayName}</p>
-          <p>Email: ${user.email}</p>
-        
-      }
 
    }
 </script>
